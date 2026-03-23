@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penny Wrenn · New York City</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink-light: #f0ead8;
+    --paper-dark-bg: #0f0e0a;
+    --paper-mid: #1c1a14;
+    --paper-card: #252219;
+    --sepia: #c8a96e;
+    --sepia-dark: #8b6914;
+    --rule: #3a3420;
+    --accent: #f5c400;
+    --accent-dim: #c8a000;
+    --accent-muted: rgba(245,196,0,0.15);
+    --text: #d8cdb4;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    background-color: var(--paper-dark-bg);
+    color: var(--text);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.07'/%3E%3C/svg%3E");
+    line-height: 1.75;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--paper-dark-bg);
+    border-bottom: 3px solid var(--accent);
+    padding: 4rem 1.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::after {
+    content: '917';
+    position: absolute;
+    right: -0.05em;
+    top: -0.15em;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(8rem, 25vw, 20rem);
+    font-weight: 900;
+    color: var(--accent);
+    opacity: 0.04;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-label {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    color: var(--ink-light);
+    letter-spacing: -0.01em;
+  }
+
+  h1 span {
+    color: var(--accent);
+    display: block;
+    font-size: clamp(1.2rem, 3.5vw, 2.5rem);
+    font-style: italic;
+    font-weight: 400;
+    margin-top: 0.2em;
+  }
+
+  .header-rule {
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    margin: 1.5rem 0;
+  }
+
+  .header-sub {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 560px;
+  }
+
+  /* MAIN */
+  main { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+
+  section {
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  section:last-of-type { border-bottom: none; }
+
+  .section-label {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.4rem, 3.5vw, 2rem);
+    font-weight: 700;
+    color: var(--ink-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-rule {
+    width: 50px;
+    height: 2px;
+    background: var(--accent);
+    margin: 1rem 0 1.5rem;
+    opacity: 0.6;
+  }
+
+  p { margin-bottom: 1.1rem; color: var(--text); }
+  p:last-child { margin-bottom: 0; }
+
+  /* MANIFESTO */
+  .manifesto {
+    background: var(--paper-card);
+    border-left: 4px solid var(--accent);
+    padding: 2rem 2rem 2rem 1.75rem;
+    margin: 1.5rem 0 0;
+  }
+
+  .manifesto p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--ink-light);
+  }
+
+  .manifesto p + p { margin-top: 1rem; }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--paper-card);
+    padding: 1.5rem;
+    border-top: 2px solid var(--rule);
+    transition: border-top-color 0.15s;
+  }
+
+  .project-card:hover { border-top-color: var(--accent); }
+
+  .project-card a {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-card a:hover { color: var(--accent); }
+
+  .project-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink-light);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .project-card p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0;
+  }
+
+  /* CIVIC */
+  .civic-list {
+    list-style: none;
+    margin-top: 1.25rem;
+  }
+
+  .civic-list li {
+    display: flex;
+    gap: 1rem;
+    padding: 0.875rem 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: flex-start;
+  }
+
+  .civic-list li:last-child { border-bottom: none; }
+
+  .civic-bullet {
+    color: var(--accent);
+    font-weight: bold;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .civic-list p { font-size: 0.9rem; margin: 0; color: var(--text); }
+
+  /* LINKS */
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  .link-block {
+    background: var(--paper-card);
+    border: 1px solid var(--rule);
+    padding: 1rem 1.25rem;
+    text-decoration: none;
+    display: block;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .link-block:hover {
+    border-color: var(--accent);
+    background: var(--accent-muted);
+  }
+
+  .link-block-domain {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .link-block-desc {
+    font-size: 0.8rem;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #000;
+    color: rgba(240,234,216,0.4);
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+    border-top: 1px solid var(--rule);
+    margin-top: 2rem;
+  }
+
+  footer a { color: var(--accent-dim); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  @media (max-width: 580px) {
+    .projects-grid { grid-template-columns: 1fr; }
+    .links-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="header-label">New York City · 917</span>
+    <h1>Penny Wrenn<span>New York is the context.</span></h1>
+    <div class="header-rule"></div>
+    <p class="header-sub">The city isn't background. It isn't setting. It's the condition — the thing that makes everything else possible and necessary and urgent. This is a site about that.</p>
+  </div>
+</header>
+
+<main>
+
+  <section id="manifesto">
+    <span class="section-label">The Premise</span>
+    <h2>New York Is the Context</h2>
+    <div class="section-rule"></div>
+    <p>There's a version of this city that people write about from the outside — the skyline, the energy, the mythology. This is not that.</p>
+
+    <div class="manifesto">
+      <p>New York is where you learn that space is negotiated, that people are complicated, that everything costs something, and that proximity to others is not the same as community with them. It teaches you efficiency and patience simultaneously. It makes you fast and it makes you wait.</p>
+      <p>Every project on this site carries New York in it — not as local color but as structural understanding. The civic work comes from a city where you can see government failing up close. The media work comes from a city where the best journalism in the world gets made and dies in the same decade. The 917 is not just an area code. It is a worldview: dense, direct, plural, unglamorous, essential.</p>
+      <p>This city has given the work its texture. The work intends to give something back.</p>
+    </div>
+  </section>
+
+  <section id="projects">
+    <span class="section-label">The Work</span>
+    <h2>Projects Rooted in NYC</h2>
+    <div class="section-rule"></div>
+    <p>These are not "New York projects" in the narrow sense — they are national and international in scope. But they were conceived and built here, and they carry the city's influence.</p>
+
+    <div class="projects-grid">
+      <div class="project-card">
+        <a href="https://power2026.com">power2026.com →</a>
+        <h3>Power 2026</h3>
+        <p>Civic counterforce for the 2026 midterms. Built from a city with institutional memory of what civic mobilization actually looks like when it works.</p>
+      </div>
+      <div class="project-card">
+        <a href="https://worriedaboutthewrongthing.com">worriedaboutthewrongthing.com →</a>
+        <h3>Worried About the Wrong Thing</h3>
+        <p>Commentary on collective misdirection. NYC gives you a daily education in what's signal and what's noise — this site is that education formalized.</p>
+      </div>
+      <div class="project-card">
+        <a href="https://searchjourney.org">searchjourney.org →</a>
+        <h3>Search Journey</h3>
+        <p>The keyword projection framework. Built from a content marketing career that ran through New York's media industry at its most fertile and its most disrupted.</p>
+      </div>
+      <div class="project-card">
+        <a href="https://dementiadeservesbetter.com">dementiadeservesbetter.com →</a>
+        <h3>Dementia Deserves Better</h3>
+        <p>Advocacy rooted in family. Navigating systems that fail — medical, bureaucratic, institutional — is something New Yorkers know intimately. This is that knowing applied.</p>
+      </div>
+      <div class="project-card">
+        <a href="https://pennywrenn.blog">pennywrenn.blog →</a>
+        <h3>pennywrenn.blog</h3>
+        <p>The primary editorial hub. Long-form writing, the America 250 framework, ongoing coverage of what matters.</p>
+      </div>
+      <div class="project-card">
+        <a href="https://pennywrenn.info">pennywrenn.info →</a>
+        <h3>Press &amp; Bio</h3>
+        <p>Published work, biography, and professional history. O Magazine, Essence, Esquire, and the work that came before and after.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="civic">
+    <span class="section-label">The Commitment</span>
+    <h2>Civic Work</h2>
+    <div class="section-rule"></div>
+    <p>The civic digital infrastructure project is built on a simple belief: the internet is land, and land in America has always been about power and ownership. Building in public, owning the infrastructure, creating a body of work that can't be extracted by someone else's algorithm — this is civic work in the original sense.</p>
+
+    <ul class="civic-list">
+      <li>
+        <span class="civic-bullet">★</span>
+        <p><strong style="color:var(--ink-light)">America 250 Editorial Framework</strong> — Six sites, one connective framework. The 250th anniversary of the United States is a moment for honest reckoning. This project provides the editorial infrastructure for that reckoning.</p>
+      </li>
+      <li>
+        <span class="civic-bullet">★</span>
+        <p><strong style="color:var(--ink-light)">101 Free Ideas</strong> — A long-running creative project: ideas released freely into the public, generated from years of research and conversation. For the people. Not for the algorithm.</p>
+      </li>
+      <li>
+        <span class="civic-bullet">★</span>
+        <p><strong style="color:var(--ink-light)">Substitute Teaching, NYC Public Schools</strong> — Direct civic engagement. Working with young people every day is not adjacent to the civic project — it is the civic project.</p>
+      </li>
+      <li>
+        <span class="civic-bullet">★</span>
+        <p><strong style="color:var(--ink-light)">#TeamTioga</strong> — Health technology consulting rooted in the same commitment to building infrastructure that serves people rather than extracting from them.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section id="links">
+    <span class="section-label">The Network</span>
+    <h2>Links</h2>
+    <div class="section-rule"></div>
+    <p>Everything connects. Start anywhere.</p>
+
+    <div class="links-grid">
+      <a href="https://pennywrenn.blog" class="link-block">
+        <span class="link-block-domain">pennywrenn.blog</span>
+        <span class="link-block-desc">Primary editorial</span>
+      </a>
+      <a href="https://pennywrenn.info" class="link-block">
+        <span class="link-block-domain">pennywrenn.info</span>
+        <span class="link-block-desc">Press &amp; biography</span>
+      </a>
+      <a href="https://power2026.com" class="link-block">
+        <span class="link-block-domain">power2026.com</span>
+        <span class="link-block-desc">Civic counterforce</span>
+      </a>
+      <a href="https://searchjourney.org" class="link-block">
+        <span class="link-block-domain">searchjourney.org</span>
+        <span class="link-block-desc">Search framework</span>
+      </a>
+      <a href="https://worriedaboutthewrongthing.com" class="link-block">
+        <span class="link-block-domain">worriedaboutthewrongthing.com</span>
+        <span class="link-block-desc">Cultural commentary</span>
+      </a>
+      <a href="https://dementiadeservesbetter.com" class="link-block">
+        <span class="link-block-domain">dementiadeservesbetter.com</span>
+        <span class="link-block-desc">Dementia advocacy</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © Penny Wrenn · All Rights Reserved · Free to read · Not free to extract<br>
+  <a href="https://pennywrenn.blog">pennywrenn.blog</a> · Part of the America 250 editorial framework
+</footer>
+
+</body>
+</html>
