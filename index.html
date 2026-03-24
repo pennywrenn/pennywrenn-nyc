@@ -1,428 +1,365 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Penny Wrenn · New York City</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+
 <style>
-  :root {
-    --ink-light: #f0ead8;
-    --paper-dark-bg: #0f0e0a;
-    --paper-mid: #1c1a14;
-    --paper-card: #252219;
-    --sepia: #c8a96e;
-    --sepia-dark: #8b6914;
-    --rule: #3a3420;
-    --accent: #f5c400;
-    --accent-dim: #c8a000;
-    --accent-muted: rgba(245,196,0,0.15);
-    --text: #d8cdb4;
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.wrap{max-width:760px;padding:1.5rem 0}
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.4rem}
+.title{font-size:26px;font-weight:500;color:var(--color-text-primary);line-height:1.2;margin-bottom:.25rem}
+.subtitle{font-size:14px;color:var(--color-text-secondary);margin-bottom:1.75rem}
+.tabs{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab{font-size:13px;padding:5px 14px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer;transition:all .15s}
+.tab.active{background:var(--color-text-primary);color:var(--color-background-primary);border-color:transparent}
+.section{display:none}
+.section.visible{display:block}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:7px;top:6px;bottom:6px;width:1px;background:var(--color-border-tertiary)}
+.era{margin-bottom:2rem}
+.era-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.75rem;padding-left:0}
+.moment{position:relative;margin-bottom:1.25rem}
+.moment::before{content:'';position:absolute;left:-23px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--color-background-primary);border:1.5px solid var(--color-border-secondary)}
+.moment.anchor::before{background:#7F77DD;border-color:#7F77DD}
+.moment.civic::before{background:#1D9E75;border-color:#1D9E75}
+.moment.media::before{background:#D85A30;border-color:#D85A30}
+.moment.teach::before{background:#378ADD;border-color:#378ADD}
+.moment-date{font-size:11px;color:var(--color-text-tertiary);margin-bottom:2px}
+.moment-title{font-size:14px;font-weight:500;color:var(--color-text-primary);line-height:1.35;margin-bottom:3px}
+.moment-desc{font-size:13px;color:var(--color-text-secondary);line-height:1.55}
+.moment-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-top:5px}
+.tag-anchor{background:#EEEDFE;color:#3C3489}
+.tag-civic{background:#E1F5EE;color:#085041}
+.tag-media{background:#FAECE7;color:#712B13}
+.tag-teach{background:#E6F1FB;color:#0C447C}
 
-  body {
-    font-family: 'Libre Baskerville', Georgia, serif;
-    background-color: var(--paper-dark-bg);
-    color: var(--text);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.07'/%3E%3C/svg%3E");
-    line-height: 1.75;
-  }
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:1.5rem}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)}
+.leg-dot{width:9px;height:9px;border-radius:50%}
 
-  /* HEADER */
-  header {
-    background: var(--paper-dark-bg);
-    border-bottom: 3px solid var(--accent);
-    padding: 4rem 1.5rem 3rem;
-    position: relative;
-    overflow: hidden;
-  }
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:1.5rem}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem}
+.card-label{font-size:11px;color:var(--color-text-tertiary);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.35rem}
+.card-val{font-size:22px;font-weight:500;color:var(--color-text-primary);margin-bottom:.2rem}
+.card-sub{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
 
-  header::after {
-    content: '917';
-    position: absolute;
-    right: -0.05em;
-    top: -0.15em;
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(8rem, 25vw, 20rem);
-    font-weight: 900;
-    color: var(--accent);
-    opacity: 0.04;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-  }
+.bequeath{background:var(--color-background-secondary);border-left:3px solid #7F77DD;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;padding:1rem 1.25rem;margin-bottom:1.5rem}
+.bequeath-from{font-size:11px;color:var(--color-text-tertiary);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+.bequeath-text{font-size:14px;color:var(--color-text-secondary);line-height:1.7;font-style:italic}
 
-  .header-inner {
-    max-width: 860px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
+.checklist{margin-bottom:1.5rem}
+.check-group{margin-bottom:1.25rem}
+.check-group-title{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.6rem}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:.5rem 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer}
+.check-item:last-child{border-bottom:none}
+.check-box{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--color-border-secondary);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.check-box.done{background:#1D9E75;border-color:#1D9E75}
+.check-box.done::after{content:'';display:block;width:8px;height:5px;border-left:1.5px solid white;border-bottom:1.5px solid white;transform:rotate(-45deg) translate(0px,-1px)}
+.check-text{font-size:13px;color:var(--color-text-primary);line-height:1.5}
+.check-text.done{color:var(--color-text-tertiary);text-decoration:line-through;text-decoration-color:var(--color-border-secondary)}
+.check-meta{font-size:11px;color:var(--color-text-tertiary);margin-top:2px}
 
-  .header-label {
-    font-family: 'Special Elite', cursive;
-    font-size: 0.75rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--accent-dim);
-    margin-bottom: 1.5rem;
-    display: block;
-  }
-
-  h1 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(2.5rem, 8vw, 5.5rem);
-    font-weight: 900;
-    line-height: 1.0;
-    color: var(--ink-light);
-    letter-spacing: -0.01em;
-  }
-
-  h1 span {
-    color: var(--accent);
-    display: block;
-    font-size: clamp(1.2rem, 3.5vw, 2.5rem);
-    font-style: italic;
-    font-weight: 400;
-    margin-top: 0.2em;
-  }
-
-  .header-rule {
-    width: 60px;
-    height: 3px;
-    background: var(--accent);
-    margin: 1.5rem 0;
-  }
-
-  .header-sub {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--text);
-    max-width: 560px;
-  }
-
-  /* MAIN */
-  main { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
-
-  section {
-    padding: 3rem 0;
-    border-bottom: 1px solid var(--rule);
-  }
-  section:last-of-type { border-bottom: none; }
-
-  .section-label {
-    font-family: 'Special Elite', cursive;
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--accent-dim);
-    margin-bottom: 0.75rem;
-    display: block;
-  }
-
-  h2 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(1.4rem, 3.5vw, 2rem);
-    font-weight: 700;
-    color: var(--ink-light);
-    margin-bottom: 0.5rem;
-  }
-
-  .section-rule {
-    width: 50px;
-    height: 2px;
-    background: var(--accent);
-    margin: 1rem 0 1.5rem;
-    opacity: 0.6;
-  }
-
-  p { margin-bottom: 1.1rem; color: var(--text); }
-  p:last-child { margin-bottom: 0; }
-
-  /* MANIFESTO */
-  .manifesto {
-    background: var(--paper-card);
-    border-left: 4px solid var(--accent);
-    padding: 2rem 2rem 2rem 1.75rem;
-    margin: 1.5rem 0 0;
-  }
-
-  .manifesto p {
-    font-size: 1rem;
-    line-height: 1.8;
-    color: var(--ink-light);
-  }
-
-  .manifesto p + p { margin-top: 1rem; }
-
-  /* PROJECTS */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.25rem;
-    margin-top: 1.5rem;
-  }
-
-  .project-card {
-    background: var(--paper-card);
-    padding: 1.5rem;
-    border-top: 2px solid var(--rule);
-    transition: border-top-color 0.15s;
-  }
-
-  .project-card:hover { border-top-color: var(--accent); }
-
-  .project-card a {
-    font-family: 'Special Elite', cursive;
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent-dim);
-    text-decoration: none;
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-
-  .project-card a:hover { color: var(--accent); }
-
-  .project-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--ink-light);
-    margin-bottom: 0.5rem;
-    line-height: 1.3;
-  }
-
-  .project-card p {
-    font-size: 0.85rem;
-    line-height: 1.6;
-    color: var(--text);
-    margin: 0;
-  }
-
-  /* CIVIC */
-  .civic-list {
-    list-style: none;
-    margin-top: 1.25rem;
-  }
-
-  .civic-list li {
-    display: flex;
-    gap: 1rem;
-    padding: 0.875rem 0;
-    border-bottom: 1px solid var(--rule);
-    align-items: flex-start;
-  }
-
-  .civic-list li:last-child { border-bottom: none; }
-
-  .civic-bullet {
-    color: var(--accent);
-    font-weight: bold;
-    flex-shrink: 0;
-    font-size: 1.1rem;
-    line-height: 1.6;
-  }
-
-  .civic-list p { font-size: 0.9rem; margin: 0; color: var(--text); }
-
-  /* LINKS */
-  .links-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 0.75rem;
-    margin-top: 1.25rem;
-  }
-
-  .link-block {
-    background: var(--paper-card);
-    border: 1px solid var(--rule);
-    padding: 1rem 1.25rem;
-    text-decoration: none;
-    display: block;
-    transition: border-color 0.15s, background 0.15s;
-  }
-
-  .link-block:hover {
-    border-color: var(--accent);
-    background: var(--accent-muted);
-  }
-
-  .link-block-domain {
-    font-family: 'Special Elite', cursive;
-    font-size: 0.8rem;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-    display: block;
-    margin-bottom: 0.3rem;
-  }
-
-  .link-block-desc {
-    font-size: 0.8rem;
-    color: var(--text);
-    line-height: 1.4;
-  }
-
-  /* FOOTER */
-  footer {
-    background: #000;
-    color: rgba(240,234,216,0.4);
-    text-align: center;
-    padding: 2rem 1.5rem;
-    font-family: 'Special Elite', cursive;
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    line-height: 1.8;
-    border-top: 1px solid var(--rule);
-    margin-top: 2rem;
-  }
-
-  footer a { color: var(--accent-dim); text-decoration: none; }
-  footer a:hover { color: var(--accent); }
-
-  @media (max-width: 580px) {
-    .projects-grid { grid-template-columns: 1fr; }
-    .links-grid { grid-template-columns: 1fr; }
-  }
+.cal-week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:1rem}
+.cal-day{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:6px;min-height:56px;font-size:10px;color:var(--color-text-tertiary)}
+.cal-day .dn{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:3px}
+.cal-ev{background:#EEEDFE;color:#3C3489;border-radius:3px;padding:1px 4px;margin-bottom:2px;font-size:9px;line-height:1.4;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cal-ev.civic{background:#E1F5EE;color:#085041}
+.cal-ev.media{background:#FAECE7;color:#712B13}
+.cal-ev.teach{background:#E6F1FB;color:#0C447C}
+.cal-head{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
+.cal-head div{font-size:10px;text-align:center;color:var(--color-text-tertiary)}
 </style>
-</head>
-<body>
 
-<header>
-  <div class="header-inner">
-    <span class="header-label">New York City · 917</span>
-    <h1>Penny Wrenn<span>New York is the context.</span></h1>
-    <div class="header-rule"></div>
-    <p class="header-sub">The city isn't background. It isn't setting. It's the condition — the thing that makes everything else possible and necessary and urgent. This is a site about that.</p>
+<div class="wrap">
+<div class="eyebrow">The Days of Life Compendium · Penny Wrenn · b. 1977 · est. 2077</div>
+<div class="title">Lifespan Intelligence for the Next American Century</div>
+<div class="subtitle">A project management timeline of pivotal moments, delivered across 50 years of thinking, building, and teaching.</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="show('bequest')">Bequest</button>
+  <button class="tab" onclick="show('pivots')">Pivotal moments</button>
+  <button class="tab" onclick="show('deliver')">Deliverables checklist</button>
+  <button class="tab" onclick="show('calendar')">Calendar as evidence</button>
+</div>
+
+<div id="sec-bequest" class="section visible">
+  <div class="bequeath">
+    <div class="bequeath-from">From the desk of Penny Wrenn, age 100 · Philadelphia · 2077</div>
+    <div class="bequeath-text">
+      "What I want you to understand is that the calendar was never just appointments. Each entry was a proof of concept. Every substitute teaching day at Franklin Elementary, every Tioga check-in, every 'Writing Camp' I registered for at noon on a Thursday — these were the raw commits to a single repository called Lifespan Intelligence. I was building it while living it. The thing I call HHRI — the idea that humans are the highest-ranking intelligence, the sovereign authors of the AI-mediated work — I didn't publish it in a journal. I built it into the operating structure of my days. By 2026 I had already named the whole stack: the economic geosphere, the hemispheric turn, the content microsphere, the Village Custodians. The calendar proves I was shipping, not just thinking."
+    </div>
   </div>
-</header>
+  <div class="grid2">
+    <div class="card"><div class="card-label">Intellectual frameworks coined</div><div class="card-val">11</div><div class="card-sub">HHRI · Economic Geosphere · Lifespan Intelligence · Content Microsphere · Village Custodians · Power 2026 · America250→500 · Hemispheric Turn · Throughline Thinking · United Moats · Failure of Imagination</div></div>
+    <div class="card"><div class="card-label">Active careers running in parallel</div><div class="card-val">4</div><div class="card-sub">Media conglomerate operator · Substitute teacher (Titi) · Civic strategist · IP architect</div></div>
+    <div class="card"><div class="card-label">Clients & civic orgs served</div><div class="card-val">6+</div><div class="card-sub">Tioga Optical · Container Village · CPG network · Benjamin Franklin Elementary · Vaux High · Spring Garden School</div></div>
+    <div class="card"><div class="card-label">Divisions of Penny Wrenn Media</div><div class="card-val">5</div><div class="card-sub">Digital magazine · Moving image collections · Social streaming · Edtech microcourses · Civic infrastructure layer</div></div>
+  </div>
+  <button class="tab" style="margin-top:.5rem" onclick="sendPrompt('Tell me more about how my pivotal moments connect across the compendium. What is the through-line?')">Explore the through-line ↗</button>
+</div>
 
-<main>
-
-  <section id="manifesto">
-    <span class="section-label">The Premise</span>
-    <h2>New York Is the Context</h2>
-    <div class="section-rule"></div>
-    <p>There's a version of this city that people write about from the outside — the skyline, the energy, the mythology. This is not that.</p>
-
-    <div class="manifesto">
-      <p>New York is where you learn that space is negotiated, that people are complicated, that everything costs something, and that proximity to others is not the same as community with them. It teaches you efficiency and patience simultaneously. It makes you fast and it makes you wait.</p>
-      <p>Every project on this site carries New York in it — not as local color but as structural understanding. The civic work comes from a city where you can see government failing up close. The media work comes from a city where the best journalism in the world gets made and dies in the same decade. The 917 is not just an area code. It is a worldview: dense, direct, plural, unglamorous, essential.</p>
-      <p>This city has given the work its texture. The work intends to give something back.</p>
-    </div>
-  </section>
-
-  <section id="projects">
-    <span class="section-label">The Work</span>
-    <h2>Projects Rooted in NYC</h2>
-    <div class="section-rule"></div>
-    <p>These are not "New York projects" in the narrow sense — they are national and international in scope. But they were conceived and built here, and they carry the city's influence.</p>
-
-    <div class="projects-grid">
-      <div class="project-card">
-        <a href="https://power2026.com">power2026.com →</a>
-        <h3>Power 2026</h3>
-        <p>Civic counterforce for the 2026 midterms. Built from a city with institutional memory of what civic mobilization actually looks like when it works.</p>
+<div id="sec-pivots" class="section">
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#7F77DD"></div> Intellectual anchor</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#1D9E75"></div> Civic deployment</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#D85A30"></div> Media / IP</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#378ADD"></div> Teaching / Titi</div>
+  </div>
+  <div class="timeline">
+    <div class="era">
+      <div class="era-label">2020–2022 · The Crucible</div>
+      <div class="moment anchor">
+        <div class="moment-date">2020</div>
+        <div class="moment-title">HHRI framework conceived</div>
+        <div class="moment-desc">The declaration that humans are the highest-ranking intelligence — sovereign authors, not consumers — of AI-mediated content. The founding intellectual stake.</div>
+        <span class="moment-tag tag-anchor">Intellectual anchor</span>
       </div>
-      <div class="project-card">
-        <a href="https://worriedaboutthewrongthing.com">worriedaboutthewrongthing.com →</a>
-        <h3>Worried About the Wrong Thing</h3>
-        <p>Commentary on collective misdirection. NYC gives you a daily education in what's signal and what's noise — this site is that education formalized.</p>
+      <div class="moment media">
+        <div class="moment-date">2020–2021</div>
+        <div class="moment-title">~3,000 pages of AI-mediated writing accumulated</div>
+        <div class="moment-desc">ChatGPT corpus begins. Later framed as the "Selfhood Encoded" repository — a copyright and trademark filing roadmap treating the archive like a software codebase with commits, milestones, and deployments.</div>
+        <span class="moment-tag tag-media">Media / IP</span>
       </div>
-      <div class="project-card">
-        <a href="https://searchjourney.org">searchjourney.org →</a>
-        <h3>Search Journey</h3>
-        <p>The keyword projection framework. Built from a content marketing career that ran through New York's media industry at its most fertile and its most disrupted.</p>
-      </div>
-      <div class="project-card">
-        <a href="https://dementiadeservesbetter.com">dementiadeservesbetter.com →</a>
-        <h3>Dementia Deserves Better</h3>
-        <p>Advocacy rooted in family. Navigating systems that fail — medical, bureaucratic, institutional — is something New Yorkers know intimately. This is that knowing applied.</p>
-      </div>
-      <div class="project-card">
-        <a href="https://pennywrenn.blog">pennywrenn.blog →</a>
-        <h3>pennywrenn.blog</h3>
-        <p>The primary editorial hub. Long-form writing, the America 250 framework, ongoing coverage of what matters.</p>
-      </div>
-      <div class="project-card">
-        <a href="https://pennywrenn.info">pennywrenn.info →</a>
-        <h3>Press &amp; Bio</h3>
-        <p>Published work, biography, and professional history. O Magazine, Essence, Esquire, and the work that came before and after.</p>
+      <div class="moment civic">
+        <div class="moment-date">2021–2022</div>
+        <div class="moment-title">Civic OS repository created on GitHub</div>
+        <div class="moment-desc">civic-ledger and penny-wrenn-civic-os repositories established. America250 civic imagination project conceived. The first version of a public-facing civic infrastructure layer.</div>
+        <span class="moment-tag tag-civic">Civic deployment</span>
       </div>
     </div>
-  </section>
-
-  <section id="civic">
-    <span class="section-label">The Commitment</span>
-    <h2>Civic Work</h2>
-    <div class="section-rule"></div>
-    <p>The civic digital infrastructure project is built on a simple belief: the internet is land, and land in America has always been about power and ownership. Building in public, owning the infrastructure, creating a body of work that can't be extracted by someone else's algorithm — this is civic work in the original sense.</p>
-
-    <ul class="civic-list">
-      <li>
-        <span class="civic-bullet">★</span>
-        <p><strong style="color:var(--ink-light)">America 250 Editorial Framework</strong> — Six sites, one connective framework. The 250th anniversary of the United States is a moment for honest reckoning. This project provides the editorial infrastructure for that reckoning.</p>
-      </li>
-      <li>
-        <span class="civic-bullet">★</span>
-        <p><strong style="color:var(--ink-light)">101 Free Ideas</strong> — A long-running creative project: ideas released freely into the public, generated from years of research and conversation. For the people. Not for the algorithm.</p>
-      </li>
-      <li>
-        <span class="civic-bullet">★</span>
-        <p><strong style="color:var(--ink-light)">Substitute Teaching, NYC Public Schools</strong> — Direct civic engagement. Working with young people every day is not adjacent to the civic project — it is the civic project.</p>
-      </li>
-      <li>
-        <span class="civic-bullet">★</span>
-        <p><strong style="color:var(--ink-light)">#TeamTioga</strong> — Health technology consulting rooted in the same commitment to building infrastructure that serves people rather than extracting from them.</p>
-      </li>
-    </ul>
-  </section>
-
-  <section id="links">
-    <span class="section-label">The Network</span>
-    <h2>Links</h2>
-    <div class="section-rule"></div>
-    <p>Everything connects. Start anywhere.</p>
-
-    <div class="links-grid">
-      <a href="https://pennywrenn.blog" class="link-block">
-        <span class="link-block-domain">pennywrenn.blog</span>
-        <span class="link-block-desc">Primary editorial</span>
-      </a>
-      <a href="https://pennywrenn.info" class="link-block">
-        <span class="link-block-domain">pennywrenn.info</span>
-        <span class="link-block-desc">Press &amp; biography</span>
-      </a>
-      <a href="https://power2026.com" class="link-block">
-        <span class="link-block-domain">power2026.com</span>
-        <span class="link-block-desc">Civic counterforce</span>
-      </a>
-      <a href="https://searchjourney.org" class="link-block">
-        <span class="link-block-domain">searchjourney.org</span>
-        <span class="link-block-desc">Search framework</span>
-      </a>
-      <a href="https://worriedaboutthewrongthing.com" class="link-block">
-        <span class="link-block-domain">worriedaboutthewrongthing.com</span>
-        <span class="link-block-desc">Cultural commentary</span>
-      </a>
-      <a href="https://dementiadeservesbetter.com" class="link-block">
-        <span class="link-block-domain">dementiadeservesbetter.com</span>
-        <span class="link-block-desc">Dementia advocacy</span>
-      </a>
+    <div class="era">
+      <div class="era-label">2023–2024 · The Naming</div>
+      <div class="moment anchor">
+        <div class="moment-date">2023</div>
+        <div class="moment-title">"Lifespan Intelligence for the Next American Century" articulated</div>
+        <div class="moment-desc">The master statement that would unify all divisions of Penny Wrenn Media. Not a niche, not a topic — a temporal architecture spanning teen → adult → midlife → elder → archive.</div>
+        <span class="moment-tag tag-anchor">Intellectual anchor</span>
+      </div>
+      <div class="moment media">
+        <div class="moment-date">2024</div>
+        <div class="moment-title">Penny Wrenn Media conglomerate structure defined</div>
+        <div class="moment-desc">Five divisions named and scoped. WRENN OS homepage prototype designed as a parody desktop interface representing each division. GitHub Pages deployment as pennywrenn.net.</div>
+        <span class="moment-tag tag-media">Media / IP</span>
+      </div>
+      <div class="moment civic">
+        <div class="moment-date">2024</div>
+        <div class="moment-title">Container Village AI workshop proposal</div>
+        <div class="moment-desc">NotebookLM implementation workshop pitched to The Container Village in Philadelphia, run by Councilman Jones' office. First formal civic-facing edtech practicum.</div>
+        <span class="moment-tag tag-civic">Civic deployment</span>
+      </div>
     </div>
-  </section>
+    <div class="era">
+      <div class="era-label">2025–2026 · The Deployment</div>
+      <div class="moment anchor">
+        <div class="moment-date">March 2026</div>
+        <div class="moment-title">"Today" document written — the full intellectual stack</div>
+        <div class="moment-desc">The Economic Geosphere essay, the Hemispheric Turn, "Breadcrumbs We Don't Know How to Read Yet," and the hyper-creator model analysis published to Google Drive. The most complete articulation of the framework to date.</div>
+        <span class="moment-tag tag-anchor">Intellectual anchor</span>
+      </div>
+      <div class="moment teach">
+        <div class="moment-date">Jan–Mar 2026</div>
+        <div class="moment-title">Titi persona activated across Philadelphia schools</div>
+        <div class="moment-desc">Substitute teaching at Gompers, Vaux, The LINC, Girls High, Amy NW, Spring Garden, Franklin Elementary, Henry School. Each classroom a proof-of-concept for the lifespan intelligence model at its youngest layer.</div>
+        <span class="moment-tag tag-teach">Teaching / Titi</span>
+      </div>
+      <div class="moment civic">
+        <div class="moment-date">Jan 29 & Feb 5, 2026</div>
+        <div class="moment-title">Tioga Optical + CPG onboarding — civic health commerce</div>
+        <div class="moment-desc">Tioga Optical formally onboarded to the Commonwealth Purchasing Group. A 13-person Zoom intro meeting. The commercial arm of civic infrastructure, deploying vision care to community health centers.</div>
+        <span class="moment-tag tag-civic">Civic deployment</span>
+      </div>
+      <div class="moment media">
+        <div class="moment-date">Feb 27, 2026</div>
+        <div class="moment-title">Writing Camp with Katie Parrott (Every)</div>
+        <div class="moment-desc">Attended live workshop on AI-native writing — voice patterns, style guides, Claude Projects. Filed as formal professional development for the media-to-IP pipeline. The work of an originator, not a consumer.</div>
+        <span class="moment-tag tag-media">Media / IP</span>
+      </div>
+    </div>
+    <div class="era">
+      <div class="era-label">2027–2050 · The Long Build (projected)</div>
+      <div class="moment anchor">
+        <div class="moment-date">2027–2030</div>
+        <div class="moment-title">Selfhood Encoded copyright & trademark filings</div>
+        <div class="moment-desc">The IP roadmap executes: copyright registration of the AI-mediated corpus, trademark filings for HHRI, PennyGPT development, licensing frameworks deployed.</div>
+        <span class="moment-tag tag-anchor">Intellectual anchor</span>
+      </div>
+      <div class="moment media">
+        <div class="moment-date">2030–2040</div>
+        <div class="moment-title">Power 2026 PDF → Power 2030 platform</div>
+        <div class="moment-desc">The downloadable civic literacy campaign becomes a full platform. America250 content microsphere reaches 250 digital artifacts. Substack, Medium, YouTube, Instagram, Threads all synchronized.</div>
+        <span class="moment-tag tag-media">Media / IP</span>
+      </div>
+      <div class="moment civic">
+        <div class="moment-date">2040–2077</div>
+        <div class="moment-title">Village Custodian governance model institutionalized</div>
+        <div class="moment-desc">The civic imagination framework for #America500 reaches institutional scale. The binder becomes a generational knowledge transfer product. Lifespan media operates teen → elder → archive.</div>
+        <span class="moment-tag tag-civic">Civic deployment</span>
+      </div>
+    </div>
+  </div>
+</div>
 
-</main>
+<div id="sec-deliver" class="section">
+  <div class="bequeath" style="border-left-color:#1D9E75">
+    <div class="bequeath-from">Compendium note · 2077</div>
+    <div class="bequeath-text">"The checklist below is how I would have explained my life's work to a project manager in 2026. Everything on it was either already shipping or already named. The calendar was the commit log."</div>
+  </div>
+  <div class="checklist" id="checklist"></div>
+  <button class="tab" onclick="sendPrompt('Which deliverable from the Days of Life compendium should I focus on completing first in 2026, given everything you know about my work?')">Help me prioritize for 2026 ↗</button>
+</div>
 
-<footer>
-  © Penny Wrenn · All Rights Reserved · Free to read · Not free to extract<br>
-  <a href="https://pennywrenn.blog">pennywrenn.blog</a> · Part of the America 250 editorial framework
-</footer>
+<div id="sec-calendar" class="section">
+  <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:1rem;line-height:1.6">
+    Your calendar from Jan–Mar 2026, read as a compendium evidence trail. Each event maps to a layer of the lifespan intelligence stack.
+  </div>
+  <div class="cal-head">
+    <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+  </div>
+  <div id="cal-grid"></div>
+  <div class="legend" style="margin-top:1rem">
+    <div class="leg-item"><div class="leg-dot" style="background:#7F77DD"></div> Intellectual/anchor</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#1D9E75"></div> Civic/client</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#378ADD"></div> Teaching (Titi)</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#D85A30"></div> Media/IP</div>
+  </div>
+  <button class="tab" onclick="sendPrompt('What patterns do you see in my calendar from early 2026 that tell a story about what I was building?')">Read the pattern ↗</button>
+</div>
+</div>
 
-</body>
-</html>
+<script>
+function show(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('visible'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('visible');
+  event.currentTarget.classList.add('active');
+}
+
+var checkData=[
+  {group:'IP & publishing (Selfhood Encoded)',items:[
+    {text:'Copyright registration — AI-mediated corpus (~3,000 pages)',done:false,meta:'Selfhood Encoded · Phase 1'},
+    {text:'Trademark filing — HHRI framework',done:false,meta:'Selfhood Encoded · Phase 2'},
+    {text:'GitHub public declaration — pennywrenn.net',done:true,meta:'Completed 2025–2026'},
+    {text:'PennyGPT custom GPT deployed (K$)',done:true,meta:'K$ artifact, OpenAI'},
+    {text:'Power 2026 PDF — 150-page civic literacy doc',done:false,meta:'In progress'},
+    {text:'Publish The Economic Geosphere as a standalone essay',done:false,meta:'March 2026 draft exists'},
+  ]},
+  {group:'Penny Wrenn Media — 5 divisions',items:[
+    {text:'WRENN OS homepage live at pennywrenn.net',done:true,meta:'GitHub Pages · index.html'},
+    {text:'Digital magazine — first issue published',done:false,meta:'Division 1'},
+    {text:'Moving image collection — pay-to-download launched',done:false,meta:'Division 2'},
+    {text:'Edtech microcourse — NotebookLM practicum shipped',done:false,meta:'Container Village pilot'},
+    {text:'Civic infrastructure layer — civic-ledger active',done:true,meta:'GitHub · civic-os'},
+  ]},
+  {group:'Civic & client work',items:[
+    {text:'Tioga Optical + CPG onboarding completed',done:true,meta:'Feb 5 2026 · 13-person Zoom'},
+    {text:'Tioga email campaign (7-email sequence) deployed',done:true,meta:'March 2026 · lead gen'},
+    {text:'Container Village AI workshop delivered',done:false,meta:'Proposal stage'},
+    {text:'America250 content microsphere — 250 artifacts',done:false,meta:'Long build'},
+  ]},
+  {group:'Teaching (Titi persona)',items:[
+    {text:'Regular placement at Benjamin Franklin Elementary',done:true,meta:'Current 2026 placement'},
+    {text:'ELA substitute at Vaux High School',done:true,meta:'Jan 15 2026'},
+    {text:'Titi <> Maasai weekly 1-1s',done:true,meta:'Recurring calendar event'},
+    {text:'Develop classroom writing practicum from HHRI',done:false,meta:'Future deliverable'},
+  ]},
+  {group:'Intellectual framework — publications',items:[
+    {text:'Hemispheric Turn essay published',done:false,meta:'"Not If, How" thread exists'},
+    {text:'Breadcrumbs We Don\'t Know How to Read — published',done:false,meta:'March 2026 draft exists'},
+    {text:'The Failure of Imagination Problem — essay',done:false,meta:'Named, not yet written'},
+    {text:'United Moats of America — essay',done:false,meta:'Named, not yet written'},
+    {text:'Oprah + Systems Thinking at Midlife — essay',done:false,meta:'Planned, interview list exists'},
+    {text:'Hope Maketh Not Ashamed — self-published book',done:false,meta:'Thread format → book'},
+  ]},
+];
+
+var cl=document.getElementById('checklist');
+checkData.forEach(function(group){
+  var gd=document.createElement('div');gd.className='check-group';
+  var gt=document.createElement('div');gt.className='check-group-title';gt.textContent=group.group;
+  gd.appendChild(gt);
+  group.items.forEach(function(item){
+    var row=document.createElement('div');row.className='check-item';
+    var box=document.createElement('div');box.className='check-box'+(item.done?' done':'');
+    var txt=document.createElement('div');
+    var t=document.createElement('div');t.className='check-text'+(item.done?' done':'');t.textContent=item.text;
+    var m=document.createElement('div');m.className='check-meta';m.textContent=item.meta;
+    txt.appendChild(t);txt.appendChild(m);
+    row.appendChild(box);row.appendChild(txt);
+    row.onclick=function(){
+      item.done=!item.done;
+      box.className='check-box'+(item.done?' done':'');
+      t.className='check-text'+(item.done?' done':'');
+    };
+    gd.appendChild(row);
+  });
+  cl.appendChild(gd);
+});
+
+var calEvents={
+  '2026-01-06':[{t:'Dr. Firmin <> Penny CPG',c:'civic'}],
+  '2026-01-08':[{t:'Teaching · Gompers',c:'teach'}],
+  '2026-01-11':[{t:'Tioga In-Person',c:'civic'}],
+  '2026-01-13':[{t:'Cheli Check-In',c:'civic'},{t:'Deborah Kulp',c:'civic'}],
+  '2026-01-15':[{t:'Teaching · Vaux High',c:'teach'}],
+  '2026-01-18':[{t:'Tioga In-Person',c:'civic'}],
+  '2026-01-25':[{t:'Tioga In-Person',c:'civic'}],
+  '2026-01-27':[{t:'Cheli Check-In',c:'civic'}],
+  '2026-01-28':[{t:'Container Village',c:'civic'},{t:'Tioga Prep Zoom',c:'civic'}],
+  '2026-01-29':[{t:'Tioga + CPG Onboarding',c:'civic'}],
+  '2026-01-31':[{t:'Vision Board',c:'anchor'}],
+  '2026-02-02':[{t:'Writing Sesh w/ Ty',c:'media'}],
+  '2026-02-04':[{t:'Container Village!',c:'civic'}],
+  '2026-02-05':[{t:'Tioga + CPG Intro',c:'civic'}],
+  '2026-02-06':[{t:'Teaching · The LINC',c:'teach'}],
+  '2026-02-07':[{t:'Titi + Maasai 1-1',c:'teach'}],
+  '2026-02-09':[{t:'Teaching (half day)',c:'teach'}],
+  '2026-02-12':[{t:'Teaching · Girls High',c:'teach'}],
+  '2026-02-13':[{t:'Teaching · Amy NW',c:'teach'}],
+  '2026-02-17':[{t:'STE Forum 2026',c:'civic'}],
+  '2026-02-20':[{t:'Teaching · Spring Garden',c:'teach'}],
+  '2026-02-22':[{t:'#TeamTioga',c:'civic'}],
+  '2026-02-23':[{t:'Team Tioga Zoom',c:'civic'}],
+  '2026-02-25':[{t:'Teaching · Spring Garden',c:'teach'}],
+  '2026-02-26':[{t:'CPG + Tioga Partnership',c:'civic'}],
+  '2026-02-27':[{t:'Writing Camp (Katie Parrott)',c:'media'}],
+  '2026-02-28':[{t:'Bidness Babeez',c:'anchor'}],
+  '2026-03-03':[{t:'Today doc written',c:'anchor'}],
+  '2026-03-05':[{t:'Today doc updated',c:'anchor'}],
+  '2026-03-06':[{t:'Teaching · Franklin Elem',c:'teach'},{t:'Robert Glasper show',c:'media'}],
+  '2026-03-16':[{t:'Teaching · Henry School',c:'teach'}],
+  '2026-03-17':[{t:'Jeff Bullock LinkedIn Live',c:'media'}],
+};
+
+var grid=document.getElementById('cal-grid');
+var weeks=[
+  ['2026-01-05','2026-01-06','2026-01-07','2026-01-08','2026-01-09','2026-01-10','2026-01-11'],
+  ['2026-01-12','2026-01-13','2026-01-14','2026-01-15','2026-01-16','2026-01-17','2026-01-18'],
+  ['2026-01-19','2026-01-20','2026-01-21','2026-01-22','2026-01-23','2026-01-24','2026-01-25'],
+  ['2026-01-26','2026-01-27','2026-01-28','2026-01-29','2026-01-30','2026-01-31','2026-02-01'],
+  ['2026-02-02','2026-02-03','2026-02-04','2026-02-05','2026-02-06','2026-02-07','2026-02-08'],
+  ['2026-02-09','2026-02-10','2026-02-11','2026-02-12','2026-02-13','2026-02-14','2026-02-15'],
+  ['2026-02-16','2026-02-17','2026-02-18','2026-02-19','2026-02-20','2026-02-21','2026-02-22'],
+  ['2026-02-23','2026-02-24','2026-02-25','2026-02-26','2026-02-27','2026-02-28','2026-03-01'],
+  ['2026-03-02','2026-03-03','2026-03-04','2026-03-05','2026-03-06','2026-03-07','2026-03-08'],
+  ['2026-03-09','2026-03-10','2026-03-11','2026-03-12','2026-03-13','2026-03-14','2026-03-15'],
+  ['2026-03-16','2026-03-17','2026-03-18','','','',''],
+];
+
+weeks.forEach(function(week){
+  var row=document.createElement('div');row.className='cal-week';
+  week.forEach(function(d){
+    var cell=document.createElement('div');cell.className='cal-day';
+    if(d){
+      var parts=d.split('-');
+      var dn=document.createElement('div');dn.className='dn';dn.textContent=parseInt(parts[2],10);
+      cell.appendChild(dn);
+      if(calEvents[d]){
+        calEvents[d].forEach(function(ev){
+          var e=document.createElement('div');e.className='cal-ev '+ev.c;e.textContent=ev.t;
+          cell.appendChild(e);
+        });
+      }
+    }
+    row.appendChild(cell);
+  });
+  grid.appendChild(row);
+});
+</script>
